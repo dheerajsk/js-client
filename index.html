@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Desc</th>
+                <th scope="col">Price</th>
+            </tr>
+        </thead>
+        <tbody id="productTableBody">
+
+        </tbody>
+    </table>
+
+    <script>
+        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjEsImVtYWlsIjoic2VsbGVyQGVjb20uY29tIiwiaWF0IjoxNjg1MzM2NTIyLCJleHAiOjE2ODUzNDAxMjJ9.8UA7Vc-s2l1JfLuzzfXugUWFVW8u9yAUO3p91YhynpU';
+
+        fetch('http://localhost:3200/api/products', {
+            headers: {
+                'Authorization': token
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                const tableBody = document.getElementById('productTableBody');
+                data.forEach((item) => {
+                    const row = document.createElement('tr');
+
+                    const idCell = document.createElement('td');
+                    idCell.textContent = item.id;
+                    row.appendChild(idCell);
+
+                    const nameCell = document.createElement('td');
+                    nameCell.textContent = item.name;
+                    row.appendChild(nameCell);
+
+                    const descCell = document.createElement('td');
+                    descCell.textContent = item.description;
+                    row.appendChild(descCell);
+
+                    const priceCell = document.createElement('td');
+                    priceCell.textContent = item.price;
+                    row.appendChild(priceCell);
+
+                    tableBody.appendChild(row);
+                });
+            })
+            .catch(error => console.error('Error:', error));
+    </script>
+</body>
+
+</html>
